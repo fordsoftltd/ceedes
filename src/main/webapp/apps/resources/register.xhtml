@@ -1,0 +1,326 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:define name="head">
+        <ui:define name="title">CEADESE</ui:define>
+        <style type="text/css">
+            .contents:hover {
+                background-color: #FAFAFA;
+            }
+
+            .contents {
+                border-bottom: 1px solid #ECEFF1
+            }
+
+            .customTitleBar>.ui-panel-titlebar {
+                background: #F5F5F5;
+                border: 1px solid #F5F5F5;
+            }
+
+            .text {
+                text-align: justify;
+            }
+
+            .customTitle>.ui-datascroller-header {
+                text-align: left;
+                padding: 4px 10px;
+                border-bottom: 0 none;
+                background: #E0E0E0;
+                border: 1px solid #E0E0E0;
+            }
+
+            body .ui-state-active, body .ui-state-highlight {
+                background-color: #039BE5;
+                color: #ffffff;
+            }
+
+            body .ui-datatable tbody tr.ui-datatable-even.ui-state-highlight {
+                background-color: #039BE5;
+                color: #ffffff;
+            }
+            body.layout-compact .ui-widget-header {
+                font-size: 14px;
+                background-color: whitesmoke;
+                color: #039BE5;
+                font-size: 16px;
+                border: 1px solid #039BE5;
+            }
+            body .ui-button {
+                overflow: hidden;
+                background-color: #039BE5;
+                color: #ffffff;
+                font-size: 16px;
+                height: 36px;
+                padding: 0 16px;
+                border: 0 none;
+                -moz-box-shadow: 0 1px 2.5px 0 rgba(0, 0, 0, 0.26), 0 1px 5px 0 rgba(0, 0, 0, 0.16);
+                -webkit-box-shadow: 0 1px 2.5px 0 rgba(0, 0, 0, 0.26), 0 1px 5px 0 rgba(0, 0, 0, 0.16);
+                box-shadow: 0 1px 2.5px 0 rgba(0, 0, 0, 0.26), 0 1px 5px 0 rgba(0, 0, 0, 0.16);
+                -moz-transition: background-color 0.3s;
+                -o-transition: background-color 0.3s;
+                -webkit-transition: background-color 0.3s;
+                transition: background-color 0.3s;
+            }
+            body .ui-state-active, body .ui-state-highlight {
+                background-color: #039BE5;
+                color: #ffffff;
+            }
+            body .fc .fc-button-group .ui-state-active {
+                background-color: #ffffff;
+                color:#039BE5
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="ui-g ui-fluid dashboard" style="margin:0px; padding:0px">
+            <div class="ui-g-12 ui-sm-12" style="margin:0px; padding:0px; margin-top:-5px;">
+                <div class="ui-g-1 ui-sm-1" style="margin:0px; padding:0px; float:left">
+                    <p:graphicImage library="ultima-layout" name="images/login/back.png"/>
+                </div>
+                <div class="ui-g-3 ui-sm-3" style="margin:0px; padding:0px; margin-left:10px;">
+                    <p:outputPanel autoUpdate="true">
+                        <p:commandLink value="#{appController.participantList.size()} Record(s)"/>
+                    </p:outputPanel>
+                </div>
+                <div class="ui-g-1 ui-sm-1" style="margin:0px; padding:0px; margin-left:10px;">
+                    <p:graphicImage library="ultima-layout" name="images/login/next.png"/>
+                </div>
+                <div class="ui-g-3" style="margin:0px; padding:0px; float:right">
+                    <div class="ui-g-7 ui-sm-7" style="margin:0px; padding:0px; float:right">
+                        <p:commandButton value="Register"  icon="ui-icon-plus" style="background-color:#92CB7E"
+                                         onclick="PF('addNew').show();"/>
+                    </div>
+                    <div class="ui-g-5 ui-sm-5" style="margin:0px; padding:0px; padding-right: 5px; float:right">
+                        <p:commandButton value="Reload"  icon="fa fa-refresh"
+
+                                         update=":contentform:result" style="background-color:#039BE5"
+                                         actionListener="#{appController.reload}"/>
+                    </div>
+                </div>
+                <div class="ui-g-12" id="content">
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" 
+                                     responsive="true" closeOnEscape="false" closable="false">
+                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                    <h:form id="contentform">
+
+                        <p:dataTable value="#{appController.participantList}" var="result"
+                                     rowKey="#{result.id}" id="result" widgetVar="result"
+                                     scrollHeight="380" scrollable="true" paginator="true" paginatorPosition="bottom"
+                                     style="margin-left: -21px; margin-right:-21px; margin-top:-6px;"
+                                     rows="50" >
+                            <f:facet name="header">
+                               <div class="ui-g ui-fluid">
+                                    <div class="ui-g-3" style="float:left;">
+                                        List of Participants
+                                    </div>
+                                    <div class="ui-g-8" style="float:right; padding:0px;">
+                                        <div class="ui-g-2">
+                                            <h:commandLink>
+                                                <i class="fa fa-print" style="margin-right:10px; color:#039BE5"/>
+                                                <p:outputLabel value="Print"/>
+                                                <p:printer target="result"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="ui-g-4">
+
+                                            <h:commandLink >
+                                                <i class="fa fa-file-excel-o" style="margin-right:10px; color:green;"/>
+                                                <p:outputLabel value="Export To Excell" />
+
+                                                <pe:exporter type="xlsx" target="result" fileName="participants"></pe:exporter>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="ui-g-4">
+
+                                            <h:commandLink >
+                                                <i class="fa fa-file-pdf-o" style="margin-right:10px; color:green;"/>
+                                                Export to PDF
+                                                <pe:exporter type="pdf" target="result" fileName="Results"></pe:exporter>
+                                                
+                                            </h:commandLink>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </f:facet>
+                            <p:column headerText="Reg_No"  width="100">
+                                <h:outputText value="#{result.serialno}"/>
+                            </p:column>
+                            
+                            <p:column headerText="Full Name" filterBy="#{result.firstname}" filterMatchMode="contains" width="140"
+                                      >
+                                <h:outputText value="#{result.firstname} #{result.middlename} #{result.lastname}"/>
+                            </p:column>
+
+                            <p:column headerText="Gender"  exportable="false">
+                                <h:outputText value="#{result.gender}"/>
+                            </p:column>
+                            <p:column headerText="Phone" exportable="false">
+                                <h:outputText value="#{result.telephoneno}"/>
+                            </p:column>
+                            <p:column headerText="Email">
+                                <h:outputText value="#{result.email}"/>
+                            </p:column>
+                            
+                            <p:column headerText="Course" exportable="false">
+                                <h:outputText value="#{result.course}"/>
+                            </p:column>
+                            <p:column headerText="Insitution" exportable="false">
+                                <h:outputText value="#{result.institution}"/>
+                            </p:column>
+                            <p:column headerText="Amount Paid" exportable="false">
+                                <h:outputText value="#{result.amountpaid}">
+                                    <f:convertNumber type="currency" currencySymbol="₦"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Payment Mode" exportable="false">
+                                <h:outputText value="#{result.paymentmode}"/>
+                            </p:column>
+                            <p:column headerText="Photo" width="50" exportable="false">
+                                <p:graphicImage name="#{result.photo}" style="height:50px; width:50px;" library="photos"/>
+                            </p:column>
+
+                            <p:column width="13" style="text-align:left" exportable="false">
+                                <p:commandLink 
+                                    title="Edit" oncomplete="PF('addNew').show()"
+                                    style="text-align:left;">
+                                    <f:setPropertyActionListener target="#{participantsdto}" value="#{result}"/>
+
+                                    <p:graphicImage name="icons8-edit-property-24.png" library="ultima-layout/icons"/>
+                                </p:commandLink>
+
+                            </p:column>
+                        </p:dataTable>
+
+                    </h:form>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="ui-g-12">
+            <h:form id="newitem" enctype="multipart/form-data">
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <p:dialog  
+                            widgetVar="addNew" 
+                            responsive="true" 
+                            fitViewport="true"
+                            closeOnEscape="false"
+                            dynamic="true"
+                            position="center" maximizable="false"
+                            width="600" height="650">
+                            <f:facet name="header">
+                              
+                                <h:outputText value="Register Participant" style="color:#039BE5"/>
+                                
+                            </f:facet>
+                            <p:growl id="addmsg" 
+                                     autoUpdate="true"  showDetail="true" />
+                                <p:fieldset style="border-left:none; border-bottom: none; border-right: none;">
+                                    <f:facet name="legend">
+                                        <h:outputText value="Photograph Information"/>
+                                    </f:facet>
+                                    <p:panelGrid styleClass="ui-panelgrid-blank form-group ui-fluid" layout="grid"
+                                                 columns="3" style="padding:0px; margin-top:-15px;">
+                                        <p:photoCam widgetVar="pc" listener="#{appController.oncapture}"
+                                         update="photo" style="height:150px;"/>
+                                        <p:commandButton type="button" value="Capture" onclick="PF('pc').capture()" style="background-color:#92CB7E"/>
+ <p:outputPanel id="photo" autoUpdate="true">
+                                        <p:graphicImage name="#{appController.photo}" rendered="#{not empty appController.photo}" 
+                                        library="photos" style="height:150px;"/>
+                                        
+                                        </p:outputPanel>
+
+                                    </p:panelGrid>
+                                </p:fieldset>
+                                <p:outputPanel id="addmsgcontent" autoUpdate="true">
+                                <p:fieldset style="border-left:none; border-bottom: none; border-right: none;">
+                                    <f:facet name="legend">
+                                        <h:outputText value="Generation Information"/>
+                                    </f:facet>
+                                    <p:panelGrid styleClass="ui-panelgrid-blank form-group ui-fluid" layout="grid"
+                                                 columns="2" style="padding:0px; margin-left:-20px; margin-top:-10px;">
+<h:panelGroup styleClass="md-inputfield md-inputfield-fill">
+                                            <p:inputText value="#{participantsdto.title}" />
+                                            <label>Title</label>
+                                        </h:panelGroup>
+                                        <h:panelGroup styleClass="md-inputfield md-inputfield-fill">
+                                            <p:inputText value="#{participantsdto.firstname}" />
+                                            <label>Firstname</label>
+                                        </h:panelGroup>
+                                        <h:panelGroup styleClass="md-inputfield md-inputfield-fill">
+                                            <p:inputText value="#{participantsdto.middlename}" />
+                                            <label>Middle</label>
+                                        </h:panelGroup>
+                                        <h:panelGroup styleClass="md-inputfield md-inputfield-fill">
+                                            <p:inputText value="#{participantsdto.lastname}" />
+                                            <label>Lastname</label>
+                                        </h:panelGroup>
+                                        <h:panelGroup styleClass="md-inputfield md-inputfield-fill">
+                                            <p:inputText value="#{participantsdto.telephoneno}"/>
+                                            <label>Telephone No</label>
+                                        </h:panelGroup>
+                                        <h:panelGroup styleClass="md-inputfield md-inputfield-fill">
+                                            <p:inputText value="#{participantsdto.email}"/>
+                                            <label>Contact Email</label>
+                                        </h:panelGroup>
+                                        <h:panelGroup styleClass="md-inputfield md-inputfield-fill">
+                                            <p:inputText value="#{participantsdto.nationality}"/>
+                                            <label>Nationality</label>
+                                        </h:panelGroup>
+                                        <p:selectOneMenu value="#{participantsdto.gender}" autoWidth="false" required="true" requiredMessage="invalid gender">
+                                            <f:selectItem itemLabel="Gender" noSelectionOption="true"/>
+                                            <f:selectItem itemLabel="Male" itemValue="Male"/>
+                                            <f:selectItem itemLabel="Female" itemValue="Female"/>
+                                        </p:selectOneMenu>
+                                        <p:selectOneMenu value="#{participantsdto.course}" autoWidth="false" required="true" requiredMessage="invalid gender">
+                                            <f:selectItem itemLabel="Programmes" noSelectionOption="true"/>
+                                            <f:selectItem itemLabel="Climate Change And Sustainable Environment" itemValue="CCASE"/>
+                                            <f:selectItem itemLabel="Innovative Instructional Methods, Tools And Techniques" itemValue="IIMTAT"/>
+                                        </p:selectOneMenu>
+                                        <h:panelGroup styleClass="md-inputfield md-inputfield-fill">
+                                            <p:inputText value="#{participantsdto.institution}"/>
+                                            <label>Participants' Institution</label>
+                                        </h:panelGroup>
+                                        <h:panelGroup styleClass="md-inputfield md-inputfield-fill">
+                                            <p:inputNumber value="#{participantsdto.amountpaid}" symbol="₦"/>
+                                            <label>Amount Paid</label>
+                                        </h:panelGroup>
+                                        <p:selectOneMenu value="#{participantsdto.paymentmode}" autoWidth="false" >
+                                            <f:selectItem itemLabel="Payment Mode" noSelectionOption="true"/>
+                                            <f:selectItem itemLabel="Bank Deposit" itemValue="Bank Deposit"/>
+                                            <f:selectItem itemLabel="E-Transfer" itemValue="E-Transfer"/>
+                                            <f:selectItem itemLabel="Payment at the Venue" itemValue="Payment at the Venue"/>
+                                            <f:selectItem itemLabel="Nominee" itemValue="Nominee"/>
+                                        </p:selectOneMenu>
+                                        <p:commandButton value="Register" 
+                                                 icon="ui-icon-plus"
+                                                 actionListener="#{appController.registerParticipant}"
+                                                 update=":contentform:result" style="float:right;background-color:#00923F"
+                                                 widgetVar="register" onclick="PF('register').disable()" oncomplete="PF('register').enable()"/>
+                                    </p:panelGrid>
+
+                                </p:fieldset>
+                            </p:outputPanel>
+                           
+                        </p:dialog>
+
+                    </div>
+
+                </div>
+            </h:form> 
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,107 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pu="http://primefaces.org/ultima">
+
+    <h:form id="menuform"> 
+        <div class="layout-menu #{guestPreferences.menuClass}">
+            <div class="nano">
+                <div class="nano-content menu-scroll-content" style="background-color:#92CB7E; color:white;">
+                    <ui:fragment rendered="#{guestPreferences.profileMode == 'inline' and guestPreferences.menuLayout != 'menu-layout-static menu-layout-horizontal'}">
+                        <div class="profile">
+                            <div class="profile-imag" style="padding:0px;">
+                               
+                            </div>
+                            <a id="profile-options" href="#">
+                                <span class="profile-name" style="color:white">Administrator#{securitydatadto.username}</span>
+                                <i class="material-icons" style="color:white;">&#xE313;</i>
+                            </a>
+                        </div>
+
+                        <ul id="profile-menu" class="ultima-menu">
+                            <li role="menuitem">
+                                <a href="#" class="ripplelink" onclick="PF('password').show()">
+                                    <i class="material-icons" style="color:white;">&#xE32A;</i>
+                                    <span style="color:white;">Change Password</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="#" class="ripplelink" onclick="PF('settings').show()">
+                                    <i class="material-icons" style="color:white;">&#xE8B9;</i>
+                                    <span style="color:white;">Settings</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="./../../resource/logout" class="ripplelink">
+                                    <i class="material-icons" style="color:white;">&#xE8AC;</i>
+                                    <span style="color:white;">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </ui:fragment>
+
+                    <pu:menu widgetVar="me">
+                        <p:menuitem  value="Dashboard" icon="fa fa-tasks"  style="color:white"
+                                     url="dashboard.html" iconPos="right"/>
+                        <p:menuitem  value="Register" icon="fa fa-user-o"  style="color:white" url="register.html"/>
+                        
+                    </pu:menu>
+                    <ui:include src="footer.xhtml"/>
+                    <h:form id="newitem2">
+                        <div class="ui-g">
+                            <div class="ui-g-12">
+                                <p:dialog  
+                                    widgetVar="password" 
+                                    responsive="true" 
+                                    fitViewport="true"
+                                    closeOnEscape="false"
+                                    dynamic="true"
+                                    position="center" maximizable="false"
+                                    width="350">
+                                    <f:facet name="header">
+                                        <h:outputText value="Change Password" style="color:#039BE5"/>
+                                    </f:facet>
+                                    <p:growl id="addmsg2" 
+                                             autoUpdate="true"  showDetail="true" />
+                                    <p:outputPanel id="addmsgcontent2" autoUpdate="true">
+                                        <p:panelGrid styleClass="ui-panelgrid-blank form-group ui-fluid" layout="grid"
+                                                     columns="1">
+
+                                            <h:panelGroup styleClass="md-inputfield md-inputfield-fill">
+                                                <p:password value="#{appHelper.oldPassword}"  required="true" requiredMessage="invalid old password"/>
+                                                <label>Old Password</label>
+                                            </h:panelGroup>
+                                            <h:panelGroup styleClass="md-inputfield md-inputfield-fill">
+                                                <p:password value="#{appHelper.password}" match="cf" feedback="true" required="true" requiredMessage="invalid  password"/>
+                                                <label>New Password</label>
+                                            </h:panelGroup>
+
+                                            <h:panelGroup styleClass="md-inputfield md-inputfield-fill">
+                                                <p:password value="#{appHelper.confirmPassword}" id="cf" feedback="true" required="true" requiredMessage="invalid confirm password"/>
+                                                <label>Confirm Password</label>
+                                            </h:panelGroup>
+                                        </p:panelGrid>
+                                    </p:outputPanel>
+                                    <f:facet name="footer">
+                                        <p:commandButton value="Change Password" 
+                                                         icon="fa fa-refresh" style="float:right;"
+                                                         />
+
+                                    </f:facet>
+                                </p:dialog>
+                                
+                               
+
+                            </div>
+
+                        </div>
+                    </h:form> 
+                    
+                </div>
+            </div>
+        </div>
+    </h:form>
+</ui:composition>
